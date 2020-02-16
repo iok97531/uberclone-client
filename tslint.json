@@ -4,16 +4,16 @@
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
+      "coverage/lcov-report/*.js",
+      "src/countries.ts"
     ]
   },
   "rules": {
     "no-console": false,
-    "member-access": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "interface-name": false,
-    "strict-null-checks": false
+    "max-classes-per-file": false,
+    "jsx-no-lambda": false
   },
   "rulesDirectory": []
 }

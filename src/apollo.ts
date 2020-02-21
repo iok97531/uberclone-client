@@ -91,6 +91,7 @@ const localStateLink = withClientState({
       },
       logUserOut: (_, __, { cache: appCache }) => {
         localStorage.removeItem("jwt");
+        console.log("logged out");
         appCache.writeData({
           data: {
             auth: {

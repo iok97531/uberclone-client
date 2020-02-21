@@ -59,7 +59,7 @@ const SettingsPresenter: React.SFC<IProps> = ({
 }) => (
   <React.Fragment>
     <Helmet>
-      <title>Settings | Nuber</title>
+      <title>Settings | UberClone</title>
     </Helmet>
     <Header title={"Account Settings"} backTo={"/"} />
     <Container>

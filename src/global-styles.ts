@@ -2,7 +2,7 @@ import { injectGlobal } from './typed-components';
 import reset from 'styled-reset';
 
 // tslint:disable-next-line
-const GlobalStyle = injectGlobal`
+injectGlobal`
 @import url('https://fonts.google.com/specimen/Maven+Pro');
 ${reset}
     *{
@@ -21,5 +21,3 @@ ${reset}
         &:active{outline:none}
     }
 `;
-
-export default GlobalStyle;

@@ -26,7 +26,6 @@ class VerifyPhoneContainer extends React.Component<IProps, IState> {
         phoneNumber: props.location.state.phone,
         verificationKey: ""
       };
-      console.log(this.state);
     }
   }
   public render() {

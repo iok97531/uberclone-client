@@ -260,10 +260,10 @@ class HomeContainer extends React.Component<IProps, IState> {
     });
   };
   public handleGeoWatchError = () => {
-    console.log("Error watching you");
+    toast.error("Error watching you");
   };
   public handleGeoError = () => {
-    console.log("No location");
+    toast.error("No location");
   };
   public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {

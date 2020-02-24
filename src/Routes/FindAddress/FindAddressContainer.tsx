@@ -2,6 +2,7 @@ import FindAddressPresenter from './FindAddressPresenter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { geoCode, reverseGeoCode } from 'src/mapHelpers';
 
 interface IState {
@@ -56,7 +57,7 @@ class FindAddressContainer extends React.Component<IProps, IState> {
     this.reverseGeocodeAddress(latitude, longitude);
   };
   public handleGeoError: PositionErrorCallback = () => {
-    console.log("No location");
+    toast.error("No location");
   };
   public loadMap = (lat, lng) => {
     const { google } = this.props;
@@ -95,7 +96,6 @@ class FindAddressContainer extends React.Component<IProps, IState> {
   public onInputBlur = async () => {
     const { address } = this.state;
     const result = await geoCode(address);
-    console.log(result);
     if (result !== false) {
       const { lat, lng, formatted_address } = result;
       this.setState({

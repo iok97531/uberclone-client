@@ -38,7 +38,7 @@ const authMiddleware = new ApolloLink((operation: Operation, forward: any) => {
 const httpLink = new HttpLink({
   uri: isDev
     ? "http://localhost:4000/graphql"
-    : "https://nuberserver.now.sh/graphql"
+    : "https://uberclone-server.herokuapp.com/graphql"
 });
 
 const wsLink = new WebSocketLink({
@@ -50,7 +50,7 @@ const wsLink = new WebSocketLink({
   },
   uri: isDev
     ? "ws://localhost:4000/subscription"
-    : "ws://nuberserver.now.sh/subscription"
+    : "ws://uberclone-server.herokuapp.com/subscription"
 });
 
 const combinedLinks = split(

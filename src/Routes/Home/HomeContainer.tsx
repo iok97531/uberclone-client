@@ -140,7 +140,8 @@ class HomeContainer extends React.Component<IProps, IState> {
                             const newObject = Object.assign({}, prev, {
                               GetNearbyRide: {
                                 ...prev.GetNearbyRide,
-                                ride: subscriptionData.data.nearbySubscription
+                                ride:
+                                  subscriptionData.data.NearbyRideSubscription
                               }
                             });
                             return newObject;

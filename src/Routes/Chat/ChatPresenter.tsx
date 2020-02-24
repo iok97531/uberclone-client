@@ -14,6 +14,7 @@ interface IProps {
   messageText: string;
   onSubmit: () => void;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  subscribeToRideStatus: () => void;
 }
 
 const Chat = styled.div`
@@ -29,46 +30,53 @@ const InputCont = styled.div`
   padding: 0 20px;
 `;
 
-const ChatPresenter: React.SFC<IProps> = ({
-  loading,
-  data: { GetChat: { chat = null } = {} } = {},
-  userData: { GetMyProfile: { user = null } = {} } = {},
-  messageText,
-  onInputChange,
-  onSubmit
-}) => (
-  <Container>
-    <Header title={"Chat"} />
-    {!loading && chat && user && (
-      <React.Fragment>
-        <Chat>
-          {chat.messages &&
-            chat.messages.map(message => {
-              if (message) {
-                return (
-                  <Message
-                    key={message.id}
-                    text={message.text}
-                    mine={user.id === message.userId}
-                  />
-                );
-              }
-              return null;
-            })}
-        </Chat>
-        <InputCont>
-          <Form submitFn={onSubmit}>
-            <Input
-              value={messageText}
-              placeholder={"Type your message"}
-              onChange={onInputChange}
-              name={"message"}
-            />
-          </Form>
-        </InputCont>
-      </React.Fragment>
-    )}
-  </Container>
-);
-
+class ChatPresenter extends React.Component<IProps, any> {
+  public componentDidMount() {
+    this.props.subscribeToRideStatus();
+  }
+  public render() {
+    const {
+      loading,
+      data: { GetChat: { chat = null } = {} } = {},
+      userData: { GetMyProfile: { user = null } = {} } = {},
+      messageText,
+      onInputChange,
+      onSubmit
+    } = this.props;
+    return (
+      <Container>
+        <Header title={"Chat"} />
+        {!loading && chat && user && (
+          <React.Fragment>
+            <Chat>
+              {chat.messages &&
+                chat.messages.map(message => {
+                  if (message) {
+                    return (
+                      <Message
+                        key={message.id}
+                        text={message.text}
+                        mine={user.id === message.userId}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+            </Chat>
+            <InputCont>
+              <Form submitFn={onSubmit}>
+                <Input
+                  value={messageText}
+                  placeholder={"Type your message"}
+                  onChange={onInputChange}
+                  name={"message"}
+                />
+              </Form>
+            </InputCont>
+          </React.Fragment>
+        )}
+      </Container>
+    );
+  }
+}
 export default ChatPresenter;

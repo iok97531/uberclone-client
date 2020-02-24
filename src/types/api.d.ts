@@ -417,7 +417,7 @@ export interface getRide_GetRide_ride {
   duration: string;
   driver: getRide_GetRide_ride_driver | null;
   passenger: getRide_GetRide_ride_passenger;
-  chatId: number;
+  chatId: number | null;
 }
 
 export interface getRide_GetRide {
@@ -469,7 +469,7 @@ export interface rideUpdates_RideStatusSubscription {
   duration: string;
   driver: rideUpdates_RideStatusSubscription_driver | null;
   passenger: rideUpdates_RideStatusSubscription_passenger;
-  chatId: number;
+  chatId: number | null;
 }
 
 export interface rideUpdates {

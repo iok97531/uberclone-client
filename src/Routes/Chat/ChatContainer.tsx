@@ -44,41 +44,6 @@ class ChatContainer extends React.Component<IProps, IState> {
         {({ data: userData }) => (
           <ChatQuery query={GET_CHAT} variables={{ chatId: chatId * 1 }}>
             {({ data, loading, subscribeToMore }) => {
-              const subscribeToMoreOptions: SubscribeToMoreOptions = {
-                document: SUBSCRIBE_TO_MESSAGES,
-                updateQuery: (prev, { subscriptionData }) => {
-                  if (!subscriptionData.data) {
-                    return prev;
-                  }
-                  const {
-                    data: { MessageSubscription }
-                  } = subscriptionData;
-                  const {
-                    GetChat: {
-                      chat: { messages }
-                    }
-                  } = prev;
-                  const newMessageId = MessageSubscription.id;
-                  const latesMessageId = messages[messages.length - 1].id;
-                  if (newMessageId === latesMessageId) {
-                    return;
-                  }
-                  const newObject = Object.assign({}, prev, {
-                    GetChat: {
-                      ...prev.GetChat,
-                      chat: {
-                        ...prev.GetChat.chat,
-                        messages: [
-                          ...prev.GetChat.chat.messages,
-                          MessageSubscription
-                        ]
-                      }
-                    }
-                  });
-                  return newObject;
-                }
-              };
-              subscribeToMore(subscribeToMoreOptions);
               return (
                 <SendMessageMutation mutation={SEND_MESSAGE}>
                   {sendMessageFn => {
@@ -91,6 +56,33 @@ class ChatContainer extends React.Component<IProps, IState> {
                         messageText={message}
                         onInputChange={this.onInputChange}
                         onSubmit={this.onSubmit}
+                        subscribeToRideStatus={() => {
+                          const messageSubscriptionOptions: SubscribeToMoreOptions = {
+                            document: SUBSCRIBE_TO_MESSAGES,
+                            updateQuery: (prev, { subscriptionData }) => {
+                              if (!subscriptionData.data) {
+                                return prev;
+                              }
+                              const {
+                                data: { MessageSubscription }
+                              } = subscriptionData;
+                              const newObject = Object.assign({}, prev, {
+                                GetChat: {
+                                  ...prev.GetChat,
+                                  chat: {
+                                    ...prev.GetChat.chat,
+                                    messages: [
+                                      ...prev.GetChat.chat.messages,
+                                      MessageSubscription
+                                    ]
+                                  }
+                                }
+                              });
+                              return newObject;
+                            }
+                          };
+                          subscribeToMore(messageSubscriptionOptions);
+                        }}
                       />
                     );
                   }}

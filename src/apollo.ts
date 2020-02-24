@@ -13,6 +13,8 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { toast } from 'react-toastify';
 
+const isDev = process.env.NODE_ENV === "development";
+
 const getToken = () => {
   const token = localStorage.getItem("jwt");
   if (token) {
@@ -34,7 +36,9 @@ const authMiddleware = new ApolloLink((operation: Operation, forward: any) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: isDev
+    ? "http://localhost:4000/graphql"
+    : "https://nuberserver.now.sh/graphql"
 });
 
 const wsLink = new WebSocketLink({
@@ -44,7 +48,9 @@ const wsLink = new WebSocketLink({
     },
     reconnect: true
   },
-  uri: "ws://localhost:4000/subscription"
+  uri: isDev
+    ? "ws://localhost:4000/subscription"
+    : "ws://nuberserver.now.sh/subscription"
 });
 
 const combinedLinks = split(
@@ -91,7 +97,6 @@ const localStateLink = withClientState({
       },
       logUserOut: (_, __, { cache: appCache }) => {
         localStorage.removeItem("jwt");
-        console.log("logged out");
         appCache.writeData({
           data: {
             auth: {

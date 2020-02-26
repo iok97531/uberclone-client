@@ -60,76 +60,87 @@ interface IProps {
   requestRideFn?: MutationFn;
   nearbyRide?: getRides;
   acceptRideFn?: MutationFn;
+  nearbyRideSubscription: () => void;
 }
 
-const HomePresenter: React.SFC<IProps> = ({
-  isMenuOpen,
-  toggleMenu,
-  loading,
-  toAddress,
-  mapRef,
-  onInputChange,
-  onAddressSubmit,
-  price,
-  data: { GetMyProfile: { user = null } = {} } = {},
-  requestRideFn,
-  nearbyRide: { GetNearbyRide: { ride = null } = {} } = {},
-  acceptRideFn
-}) => (
-  <Container>
-    <Helmet>
-      <title>Home | UberClone</title>
-    </Helmet>
-    <Sidebar
-      sidebar={<Menu />}
-      open={isMenuOpen}
-      onSetOpen={toggleMenu}
-      styles={{
-        sidebar: {
-          width: "80%",
-          background: "white",
-          zIndex: "10"
-        }
-      }}
-    >
-      {!loading && <MenuButton onClick={() => toggleMenu()}>|||</MenuButton>}
-      {user && !user.isDriving && (
-        <React.Fragment>
-          <AddressBar
-            name={"toAddress"}
-            onChange={onInputChange}
-            value={toAddress}
-            onBlur={null}
-          />
-          <ExtendedButton
-            onClick={onAddressSubmit}
-            disabled={toAddress === ""}
-            value={price ? "Change address" : "Pick Address"}
-          />
-        </React.Fragment>
-      )}
-      {price && (
-        <RequestdButton
-          onClick={requestRideFn}
-          disabled={toAddress === ""}
-          value={`Request Ride ($${price})`}
-        />
-      )}
-      {ride && (
-        <RidePopUp
-          id={ride.id}
-          pickUpAddress={ride.pickUpAddress}
-          dropOffAddress={ride.dropOffAddress}
-          price={ride.price}
-          distance={ride.distance}
-          passengerName={ride.passenger.fullName!}
-          passengerPhoto={ride.passenger.profilePhoto!}
-          acceptRideFn={acceptRideFn}
-        />
-      )}
-      <Map innerRef={mapRef} />
-    </Sidebar>
-  </Container>
-);
+class HomePresenter extends React.Component<IProps> {
+  public componentDidMount() {
+    this.props.nearbyRideSubscription();
+  }
+  public render() {
+    const {
+      isMenuOpen,
+      toggleMenu,
+      loading,
+      toAddress,
+      mapRef,
+      onInputChange,
+      onAddressSubmit,
+      price,
+      data: { GetMyProfile: { user = null } = {} } = {},
+      requestRideFn,
+      nearbyRide: { GetNearbyRide: { ride = null } = {} } = {},
+      acceptRideFn
+    } = this.props;
+    return (
+      <Container>
+        <Helmet>
+          <title>Home | UberClone</title>
+        </Helmet>
+        <Sidebar
+          sidebar={<Menu />}
+          open={isMenuOpen}
+          onSetOpen={toggleMenu}
+          styles={{
+            sidebar: {
+              width: "80%",
+              background: "white",
+              zIndex: "10"
+            }
+          }}
+        >
+          {!loading && (
+            <MenuButton onClick={() => toggleMenu()}>|||</MenuButton>
+          )}
+          {user && !user.isDriving && (
+            <React.Fragment>
+              <AddressBar
+                name={"toAddress"}
+                onChange={onInputChange}
+                value={toAddress}
+                onBlur={null}
+              />
+              <ExtendedButton
+                onClick={onAddressSubmit}
+                disabled={toAddress === ""}
+                value={price ? "Change address" : "Pick Address"}
+              />
+            </React.Fragment>
+          )}
+          {price && (
+            <RequestdButton
+              onClick={requestRideFn}
+              disabled={toAddress === ""}
+              value={`Request Ride ($${price})`}
+            />
+          )}
+          {ride && (
+            <RidePopUp
+              id={ride.id}
+              pickUpAddress={ride.pickUpAddress}
+              dropOffAddress={ride.dropOffAddress}
+              price={ride.price}
+              distance={ride.distance}
+              passengerName={ride.passenger.fullName!}
+              passengerPhoto={ride.passenger.profilePhoto!}
+              acceptRideFn={acceptRideFn}
+            />
+          )}
+          <Map innerRef={mapRef} />
+        </Sidebar>
+      </Container>
+    );
+  }
+}
 
 export default HomePresenter;

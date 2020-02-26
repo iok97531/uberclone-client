@@ -1,6 +1,6 @@
 import SocialLoginPresenter from './SocialLoginPresenter';
 import { FACEBOOK_CONNECT } from './SocialLoginQueries';
-import { LOG_USER_IN } from '../../sharedQueries.local';
+import { LOG_USER_IN } from '../../sharedQueriesLocal';
 import { facebookConnect, facebookConnectVariables } from '../../types/api';
 import React from 'react';
 import { Mutation, MutationFn } from 'react-apollo';

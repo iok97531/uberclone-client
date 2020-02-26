@@ -1,6 +1,6 @@
 import VerifyPhonePresenter from './VerifyPhonePresenter';
 import { VERIFY_PHONE } from './VerifyPhoneQueries';
-import { LOG_USER_IN } from '../../sharedQueries.local';
+import { LOG_USER_IN } from '../../sharedQueriesLocal';
 import { verifyPhone, verifyPhoneVariables } from '../../types/api';
 import React from 'react';
 import { Mutation } from 'react-apollo';

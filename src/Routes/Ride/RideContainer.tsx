@@ -37,23 +37,6 @@ class RideContainer extends React.Component<IProps> {
         {({ data: userData }) => (
           <RideQuery query={GET_RIDE} variables={{ rideId: rideId * 1 }}>
             {({ data, loading, subscribeToMore }) => {
-              const subscribeOptions: SubscribeToMoreOptions = {
-                document: RIDE_SUBSCRIPTION,
-                updateQuery: (prev, { subscriptionData }) => {
-                  if (!subscriptionData.data) {
-                    return prev;
-                  }
-                  const {
-                    data: {
-                      RideStatusSubscription: { status }
-                    }
-                  } = subscriptionData;
-                  if (status === "FINISHED") {
-                    window.location.href = "/";
-                  }
-                }
-              };
-              subscribeToMore(subscribeOptions);
               return (
                 <RideUpdate mutation={UPDATE_RIDE_STATUS}>
                   {updateRideFn => (
@@ -62,6 +45,26 @@ class RideContainer extends React.Component<IProps> {
                       loading={loading}
                       data={data}
                       updateRideFn={updateRideFn}
+                      rideStatusSubscription={() => {
+                        const subscribeOptions: SubscribeToMoreOptions = {
+                          document: RIDE_SUBSCRIPTION,
+                          updateQuery: (prev, { subscriptionData }) => {
+                            if (!subscriptionData.data) {
+                              return prev;
+                            }
+                            const {
+                              data: {
+                                RideStatusSubscription: { status }
+                              }
+                            } = subscriptionData;
+                            if (status === "FINISHED") {
+                              window.location.href = "/";
+                            }
+                          }
+                        };
+
+                        subscribeToMore(subscribeOptions);
+                      }}
                     />
                   )}
                 </RideUpdate>

@@ -1,6 +1,6 @@
 import SettingsPresenter from './SettingsPresenter';
 import { GET_PLACES, USER_PROFILE } from '../../sharedQueries';
-import { LOG_USER_OUT } from '../../sharedQueries.local';
+import { LOG_USER_OUT } from '../../sharedQueriesLocal';
 import { getPlaces, userProfile } from '../../types/api';
 import React from 'react';
 import { Mutation, Query } from 'react-apollo';

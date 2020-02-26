@@ -50,7 +50,7 @@ const wsLink = new WebSocketLink({
   },
   uri: isDev
     ? "ws://localhost:4000/subscription"
-    : "ws://uberclone-server.herokuapp.com/subscription"
+    : "wss://uberclone-server.herokuapp.com/subscription"
 });
 
 const combinedLinks = split(
@@ -84,6 +84,7 @@ const localStateLink = withClientState({
   resolvers: {
     Mutation: {
       logUserIn: (_, { token }, { cache: appCache }) => {
+        console.log("log in");
         localStorage.setItem("jwt", token);
         appCache.writeData({
           data: {
@@ -117,8 +118,7 @@ const client = new ApolloClient({
     errorLink,
     localStateLink,
     concat(authMiddleware, combinedLinks)
-  ]),
-  resolvers: {}
+  ])
 });
 
 export default client;

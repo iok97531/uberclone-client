@@ -29,7 +29,7 @@ const PlacesPresenter: React.SFC<IProps> = ({
     </Helmet>
     <Header title={"Places"} backTo={"/"} />
     <Container>
-      {!loading && places && places.length === 0 && "You have no places"}
+      {!loading && places && places.length === 0 && "You have no places\n"}
       {!loading &&
         places &&
         places.map(place => (
@@ -41,6 +41,8 @@ const PlacesPresenter: React.SFC<IProps> = ({
             address={place!.address}
           />
         ))}
+      <br />
+      <br />
       <SLink to={"/add-place"}>Add some places!</SLink>
     </Container>
   </React.Fragment>

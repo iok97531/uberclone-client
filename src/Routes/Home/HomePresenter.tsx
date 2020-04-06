@@ -60,13 +60,10 @@ interface IProps {
   requestRideFn?: MutationFn;
   nearbyRide?: getRides;
   acceptRideFn?: MutationFn;
-  nearbyRideSubscription: () => void;
+  nearbyRideSubscription: (_) => void;
 }
 
 class HomePresenter extends React.Component<IProps> {
-  public componentDidMount() {
-    this.props.nearbyRideSubscription();
-  }
   public render() {
     const {
       isMenuOpen,
@@ -82,6 +79,7 @@ class HomePresenter extends React.Component<IProps> {
       nearbyRide: { GetNearbyRide: { ride = null } = {} } = {},
       acceptRideFn
     } = this.props;
+    this.props.nearbyRideSubscription(user?.isDriving);
     return (
       <Container>
         <Helmet>

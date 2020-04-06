@@ -3,7 +3,7 @@ import reset from 'styled-reset';
 
 // tslint:disable-next-line
 injectGlobal`
-@import url('https://fonts.google.com/specimen/Maven+Pro');
+@import url('https://fonts.googleapis.com/css?family=Maven+Pro&display=swap');
 ${reset}
     *{
         box-sizeing: border-box;

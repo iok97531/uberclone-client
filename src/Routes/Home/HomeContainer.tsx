@@ -1,4 +1,4 @@
-import HomePresenter from "./HomePresenter";
+import HomePresenter from './HomePresenter';
 import {
   ACCEPT_RIDE,
   GET_NEARBY_DRIVERS,
@@ -6,8 +6,8 @@ import {
   REPORT_LOCATION,
   REQUEST_RIDE,
   SUBSCRIBE_NEARBY_RIDES
-} from "./HomeQueries";
-import { geoCode, reverseGeoCode } from "../../mapHelpers";
+  } from './HomeQueries';
+import { geoCode, reverseGeoCode } from '../../mapHelpers';
 import {
   acceptRide,
   acceptRideVariables,
@@ -18,14 +18,19 @@ import {
   requestRide,
   requestRideVariables,
   userProfile
-} from "../../types/api";
-import { SubscribeToMoreOptions } from "apollo-boost";
-import React from "react";
-import { graphql, Mutation, MutationFn, Query } from "react-apollo";
-import ReactDOM from "react-dom";
-import { RouteComponentProps } from "react-router-dom";
-import { toast } from "react-toastify";
-import { USER_PROFILE } from "src/sharedQueries";
+  } from '../../types/api';
+import { SubscribeToMoreOptions } from 'apollo-boost';
+import React from 'react';
+import {
+  graphql,
+  Mutation,
+  MutationFn,
+  Query
+  } from 'react-apollo';
+import ReactDOM from 'react-dom';
+import { RouteComponentProps } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { USER_PROFILE } from 'src/sharedQueries';
 
 interface IState {
   isMenuOpen: boolean;
@@ -70,7 +75,7 @@ class HomeContainer extends React.Component<IProps, IState> {
     distance: "",
     duration: undefined,
     price: undefined,
-    isDriving: false
+    isDriving: true
   };
   constructor(props) {
     super(props);
@@ -79,7 +84,7 @@ class HomeContainer extends React.Component<IProps, IState> {
   }
   public componentDidMount() {
     navigator.geolocation.getCurrentPosition(
-      this.handleGeoSucces,
+      this.handleGeoSuccess,
       this.handleGeoError
     );
   }
@@ -145,7 +150,7 @@ class HomeContainer extends React.Component<IProps, IState> {
                                 requestRideFn={requestRideFn}
                                 nearbyRide={nearbyRide}
                                 acceptRideFn={acceptRideFn}
-                                nearbyRideSubscription={() => {
+                                nearbyRideSubscription={isDriver => {
                                   const rideSubscriptionOptions: SubscribeToMoreOptions = {
                                     document: SUBSCRIBE_NEARBY_RIDES,
                                     updateQuery: (
@@ -170,7 +175,7 @@ class HomeContainer extends React.Component<IProps, IState> {
                                       return newObject;
                                     }
                                   };
-                                  if (isDriving) {
+                                  if (isDriver) {
                                     subscribeToMore(rideSubscriptionOptions);
                                   }
                                 }}
@@ -197,7 +202,7 @@ class HomeContainer extends React.Component<IProps, IState> {
     });
   };
 
-  public handleGeoSucces = (positon: Position) => {
+  public handleGeoSuccess = (positon: Position) => {
     const {
       coords: { latitude, longitude }
     } = positon;
@@ -424,11 +429,9 @@ class HomeContainer extends React.Component<IProps, IState> {
       const {
         user: { isDriving }
       } = GetMyProfile;
-      if (isDriving) {
-        this.setState({
-          isDriving
-        });
-      }
+      this.setState({
+        isDriving
+      });
     }
   };
   public handleRideAcceptance = (data: acceptRide) => {

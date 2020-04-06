@@ -46,12 +46,16 @@ const wsLink = new WebSocketLink({
     connectionParams: {
       "X-JWT": getToken()
     },
-    reconnect: true
+    reconnect: true,
+    lazy: true
   },
   uri: isDev
     ? "ws://localhost:4000/subscription"
     : "wss://uberclone-server.herokuapp.com/subscription"
 });
+
+wsLink.subscriptionClient.maxConnectTimeGenerator.duration = () =>
+  wsLink.subscriptionClient.maxConnectTimeGenerator.max;
 
 const combinedLinks = split(
   ({ query }) => {

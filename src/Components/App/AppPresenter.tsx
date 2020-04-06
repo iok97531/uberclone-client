@@ -6,7 +6,8 @@ import Home from '../../Routes/Home';
 import Login from '../../Routes/Login';
 import PhoneLogin from '../../Routes/PhoneLogin';
 import Places from '../../Routes/Places';
-import Ride from '../../Routes/Ride';
+import RideDetail from '../../Routes/RideDetail';
+import RideHistory from '../../Routes/RideHistory';
 import Settings from '../../Routes/Settings';
 import SocialLogin from '../../Routes/SocialLogin';
 import VerifyPhone from '../../Routes/VerifyPhone';
@@ -42,7 +43,8 @@ const LoggedOutRoutes: React.SFC = () => (
 const LoggedInRoutes: React.SFC = () => (
   <Switch>
     <Route path={"/"} exact={true} component={Home} />
-    <Route path={"/ride/:rideId"} exact={true} component={Ride} />
+    <Route path={"/ride/:rideId"} exact={true} component={RideDetail} />
+    <Route path={"/trips"} exact={true} component={RideHistory} />
     <Route path={"/chat/:chatId"} exaxt={true} component={Chat} />
     <Route path={"/edit-account"} exact={true} component={EditAccount} />
     <Route path={"/settings"} exact={true} component={Settings} />

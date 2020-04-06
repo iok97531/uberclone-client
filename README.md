@@ -21,7 +21,8 @@ Client for the Uber Clone. ReactJS, Apollo, Typescript
 - [x] Places
 - [x] Add Place
 - [x] Find Address
-- [ ] Ride History
+- [x] Ride History
+- [ ] Ride Details
 - [ ] Email Sign In
 
 [uberclone](https://iok97531.github.io/uberclone-client/)

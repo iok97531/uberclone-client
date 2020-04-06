@@ -51,7 +51,7 @@ interface IProps {
   rideStatusSubscription: () => void;
 }
 
-class RidePresenter extends React.Component<IProps> {
+class RideDetailPresenter extends React.Component<IProps> {
   public componentDidMount() {
     this.props.rideStatusSubscription();
   }
@@ -136,4 +136,4 @@ class RidePresenter extends React.Component<IProps> {
     );
   }
 }
-export default RidePresenter;
+export default RideDetailPresenter;

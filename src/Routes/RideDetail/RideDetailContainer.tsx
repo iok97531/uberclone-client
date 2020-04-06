@@ -1,6 +1,6 @@
-import RidePresenter from './RidePresenter';
-import { GET_RIDE, RIDE_SUBSCRIPTION, UPDATE_RIDE_STATUS } from './RideQueries';
-import { USER_PROFILE } from '../../sharedQueries';
+import RidePresenter from './RideDetailPresenter';
+import { RIDE_SUBSCRIPTION, UPDATE_RIDE_STATUS } from './RideDetailQueries';
+import { GET_RIDE, USER_PROFILE } from '../../sharedQueries';
 import {
   getRide,
   getRideVariables,
@@ -19,7 +19,7 @@ class RideUpdate extends Mutation<updateRide, updateRideVariables> {}
 
 interface IProps extends RouteComponentProps<any> {}
 
-class RideContainer extends React.Component<IProps> {
+class RideDetailContainer extends React.Component<IProps> {
   constructor(props: IProps) {
     super(props);
     if (!props.match.params.rideId) {
@@ -76,4 +76,4 @@ class RideContainer extends React.Component<IProps> {
     );
   }
 }
-export default RideContainer;
+export default RideDetailContainer;
